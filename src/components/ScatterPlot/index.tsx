@@ -11,12 +11,6 @@ const getRandomData = () =>
   D3.range(20).map(() => ({ x: Math.random(), y: Math.random() }))
 
 
-// interface DatapointInterface {
-// cx: number;
-// cy: number;
-// r: number;
-// }
-
 const Axis = ({ x, y, scale, axisType, ticks = 10 }: any) => {
   const fnName = axisType === "left" ? "axisLeft" : "axisBottom"
   const ref = useD3(el => D3.select(el).call(D3[fnName](scale).ticks(ticks)))
@@ -43,18 +37,6 @@ const Datapoint = ({ cx, cy, r } : DatapointInterface) => {
     .domain([0, 1])
     .range([height, 0])
 
-  // useEffect(() => {
-  //   D3.selection()
-  //     .transition(`spinner-${cx}${cy}`)
-  //     .tween("spinning", () => {
-  //       const interpolate = D3.interpolate(0, 360)
-  //       return t => setDegrees(Math.round(interpolate(t)))
-  //     })
-  //     .duration(1000)
-  //     .ease(D3.easeBounceOut)
-  //     .delay(100 * index)
-  // }, [])
-
   return (
     <g transform={`translate(${cx}, ${cy}) rotate(${degrees})`}>
       {/* create a scatterplot of the actual data */}
@@ -73,22 +55,21 @@ const Datapoint = ({ cx, cy, r } : DatapointInterface) => {
 }
 
 
-export default class BarChart extends React.Component {
+export default class ScatterPlot extends React.Component {
     data = getRandomData()
-    height = 700
-    width = 700
+    height = 400
+    width = 400
     xScale = D3.scaleLinear()
         .domain([0, 1])
         .range([45, this.width - 10])
     yScale = D3.scaleLinear()
         .domain([0, 1])
         .range([this.height - 45, 5])
-
     
     render() {
         return (
         <svg width={this.width} height={this.height}>
-        {/* create a scatterplot of the actual data */}
+
         {this.data.map((d: any, i: number) => (
             <Datapoint
             key={`${d.x}${d.y}`}

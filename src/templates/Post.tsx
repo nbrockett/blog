@@ -42,7 +42,8 @@ import config from '../../_config';
 
 import rehypeReact from "rehype-react"
 import Counter from "../components/Counter"
-import BarChart from "../components/D3BarChart"
+import BarChart from "../components/ScatterPlot"
+import ScatterPlot from '../components/ScatterPlot';
 
 interface postProps {
   data: any;
@@ -81,7 +82,7 @@ const Post = (props: postProps) => {
   const renderAst = new rehypeReact({
     createElement: React.createElement,
     components: { "interactive-counter": Counter,
-                  "d3-barchart": BarChart},
+                  "scatterplot": ScatterPlot},
   }).Compiler
   
 
