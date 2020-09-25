@@ -38,6 +38,12 @@ import SEO from '../components/seo';
 import { RootState } from '../state/reducer';
 import config from '../../_config';
 
+// import d3 from "d3"
+
+import rehypeReact from "rehype-react"
+import Counter from "../components/Counter"
+
+
 interface postProps {
   data: any;
   pageContext: { slug: string; series: any[]; lastmod: string };
@@ -60,7 +66,7 @@ const Post = (props: postProps) => {
   const [colorMode] = useColorMode();
 
   const { markdownRemark } = data;
-  const { frontmatter, html, tableOfContents, fields, excerpt } = markdownRemark;
+  const { frontmatter, html, htmlAst, tableOfContents, fields, excerpt } = markdownRemark;
   const { title, date, tags, keywords } = frontmatter;
   let update = frontmatter.update;
   if (Number(update?.split(',')[1]) === 1) update = null;
@@ -71,6 +77,12 @@ const Post = (props: postProps) => {
   const isDevelopment = process.env.NODE_ENV === 'development';
   const isDisqus: boolean = disqusShortname ? true : false;
   const isSocialShare = enableSocialShare;
+
+  const renderAst = new rehypeReact({
+    createElement: React.createElement,
+    components: { "interactive-counter": Counter },
+  }).Compiler
+  
 
   const mapTags = tags.map((tag: string) => {
     return (
@@ -279,7 +291,10 @@ const Post = (props: postProps) => {
               </>
             ) : null}
 
-            <div className="blog-post-content" dangerouslySetInnerHTML={{ __html: html }} />
+            {/* <div className="blog-post-content" dangerouslySetInnerHTML={{ __html: html }} />/ */}
+            {
+              renderAst(htmlAst)
+            }
           </div>
 
           {isSocialShare ? (
@@ -358,7 +373,7 @@ const Post = (props: postProps) => {
 export const pageQuery = graphql`
   query($slug: String) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      htmlAst
       excerpt(truncate: true, format: PLAIN)
       tableOfContents
       fields {
