@@ -1,6 +1,6 @@
 // // import React from "react"
 // import React, { useState, useEffect } from "react"
-// import * as D3 from "d3"
+import * as d3 from "d3"
 // import { useD3 } from "d3blackbox"
 
 // const barChartStyle = {
@@ -93,6 +93,9 @@ See the LinearGraph for an example of calling ScatterPlot
 */
 import React from "react"
 import { scaleLinear, max, axisLeft, axisBottom, select } from "d3"
+import Papa from 'papaparse'
+
+
 
 function sortNumber(a, b) {
   return a - b
@@ -103,11 +106,11 @@ interface IScatterPlotBase {
 }
 
 class ScatterPlotBase extends React.Component {
-  // constructor(props:IScatterPlotBase) {
-  //   super(props)
-  // }
+  constructor(props:IScatterPlotBase) {
+    super(props)
+  }
 
-  props: any
+  // props: any
 
   render() {
     const margin = { top: 20, right: 15, bottom: 60, left: 60 }
@@ -135,7 +138,7 @@ class ScatterPlotBase extends React.Component {
 
     return (
       <div>
-        <h3> Scatter Plot with Trend Line </h3>
+        {/* <h3> Scatter Plot with Trend Line </h3> */}
         <svg
           width={width + margin.right + margin.left}
           height={height + margin.top + margin.bottom}
@@ -261,12 +264,153 @@ function linearRegression(y, x) {
 // import React from "react"
 // import ScatterPlot from "./ScatterPlot-with-trendline"
 
-var data:number[][] = [[0, 3],[5, 13],[10, 22],[15, 36],[20, 48],[25, 59],[30, 77],[35, 85],[40, 95],[45, 105],[50, 120],[55, 150],[60, 147],[65, 168],[70, 176],[75, 188],[80, 199],[85, 213],[90, 222],[95, 236],[100, 249]]
+// var data:number[][] = [[0, 3],[5, 13],[10, 22],[15, 36],[20, 48],[25, 59],[30, 77],[35, 85],[40, 95],[45, 105],[50, 120],[55, 150],[60, 147],[65, 168],[70, 176],[75, 188],[80, 199],[85, 213],[90, 222],[95, 236],[100, 249]]
+
+
+
+// async function GetData() {
+//     const data = Papa.parse(await fetchCsv());
+//     console.log(data);
+//     // return data;
+// }
+
+// async function fetchCsv() {
+//     const response = await fetch('data.csv');
+//     const reader = response.body.getReader();
+//     const result = await reader.read();
+//     const decoder = new TextDecoder('utf-8');
+//     const csv = await decoder.decode(result.value);
+//     console.log('csv log:', csv);
+//     return csv;
+// }
+
+// GetData()
+
+// const csv = fs
+//   .createReadStream('data.csv')
+//   .pipe(csv.default({ separator: '|' }))
+//   .on('data', (data) => {
+//     results.push(data);
+//   })
+//   .on('end', () => {
+//     console.log(results);
+//     someFunction(results);
+//   });
+
+
+// var data3 = null
+
+// import csv_data from "./data.csv";
+// import json_data from "./data.json";
+
+// interface IProps {
+// }
+
+// interface IState {
+//   data: number[][];
+// }
+
+
+// export default class ScatterPlot extends React.Component<IProps, IState> {
+
+//   static defaultProps = {
+//     data: []
+//   }
+
+//   // constructor(props: IProps) {
+//   //   super(props);
+
+//   //   this.state = {
+//   //       data: []
+//   //   };
+//   // }
+
+
+
+
+//   componentDidMount() {
+//     // Load data when the component mounts
+//     // d3.csv(csv_data, (err: any, my_data: any) => {
+//     //   console.log('d3 log:', my_data);
+//     //   this.setState({ data: my_data });
+      
+//     // });
+
+//     d3.csv(csv_data).then(function(my_data: any) {
+//       console.log('d3 log:', my_data);
+//       // this.setState({ data: my_data });
+//     }).catch(function(err: any) {
+//       console.log('d3 log ERROR:', err);
+//       throw err;
+//     })
+//   }
+
+
+//   render() {
+
+//     // Store all of the data to be plotted 
+//     // let allData = data3.map((d) => {
+//     //   return {
+//     //       x: d[0],
+//     //       y: d[1],
+//     //   };
+//     // });
+    
+
+//     // const data = await D3.csv("data.csv");
+//     // console.log(data);
+
+//     // console.log('csv log:', this.state.data);
+//     // console.log('csv log:', allData);
+//     // console.log('csv log:', allData);
+
+//     // return (<ScatterPlotBase data={allData} />)
+//     // return <ScatterPlotBase data={this.state.data2} />
+//     return (null)
+//   }
+// }
+
+
+// query MyQuery {
+//   allDataCsv {
+//       nodes {
+//         x
+//         y
+//       }
+//     }
+//   }
+
+
+// var data_orig:number[][] = [[0, 3],[5, 13],[10, 22],[15, 36],[20, 48],[25, 59],[30, 77],[35, 85],[40, 95],[45, 105],[50, 120],[55, 150],[60, 147],[65, 168],[70, 176],[75, 188],[80, 199],[85, 213],[90, 222],[95, 236],[100, 249]]
+// import my_data from './data2.json';
+// import my_csv_data from './data.csv';
+
+// import my_data from data_path;
 
 export default class ScatterPlot extends React.Component {
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = { data: null };
+  }
+
+  componentDidMount() { 
+
+    this.setState({ data: my_data });
+    // this.setState((state) => ({ data: my_data }));
+    // // console.log("scatter log:", my_data)
+    // import('./data.json').then(result => {this.setState({ data: result });});
+  }
+
   render() {
-    return <ScatterPlotBase data={data} />
+
+    var data_path = './data.json'
+    var idata = import('./data.json')
+
+    // import('./data.json').then(result => {this.setState({ data: result });});
+
+    return (<ScatterPlotBase data={idata}></ScatterPlotBase>)
+    // return (null)
   }
 }
-
-
