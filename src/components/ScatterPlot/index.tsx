@@ -382,7 +382,7 @@ function linearRegression(y, x) {
 
 
 // var data_orig:number[][] = [[0, 3],[5, 13],[10, 22],[15, 36],[20, 48],[25, 59],[30, 77],[35, 85],[40, 95],[45, 105],[50, 120],[55, 150],[60, 147],[65, 168],[70, 176],[75, 188],[80, 199],[85, 213],[90, 222],[95, 236],[100, 249]]
-// import my_data from './data2.json';
+import my_data from './data2.json';
 // import my_csv_data from './data.csv';
 
 // import my_data from data_path;
@@ -405,12 +405,12 @@ export default class ScatterPlot extends React.Component {
 
   render() {
 
-    var data_path = './data.json'
-    var idata = import('./data.json')
+    // var data_path = './data.json'
+    // var idata = import('./data.json')
 
     // import('./data.json').then(result => {this.setState({ data: result });});
 
-    return (<ScatterPlotBase data={idata}></ScatterPlotBase>)
+    return (<ScatterPlotBase data={my_data}></ScatterPlotBase>)
     // return (null)
   }
 }

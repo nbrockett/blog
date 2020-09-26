@@ -7,6 +7,8 @@ date: 2020-09-25
 
 ![](screenshot.png)
 
+![](svg_example.svg)
+
 <!-- # Example with Data -->
 
 $a^2 + b^2 = c^2$
